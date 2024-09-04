@@ -8,11 +8,22 @@ from django.apps import apps
 class Command(BaseCommand):
     help = "Load all access files"
 
+    def check_fields(self, role_permission , model_fields: list[str], filename):
+        # There are more efficient ways to do that, but this way, app will
+        # pinpoint your (or anybody's) mistake in *.access file.
+        print_red = lambda text: print(f"\033[91m{text}\033[0m")
+        for access_type in ["write", "read", "delete"]:
+            for type_perm in role_permission.get('permissions').get(access_type):
+                if type_perm not in model_fields:
+                    print_red("Problem occurs with loading the access file: %s" % filename)
+                    raise CommandError("Can't recognise field: \'%s\' in type \'%s\' in file: \'%s\'" % 
+                        (type_perm, access_type, filename))
 
-    def is_correct_field(self):
-        pass
 
     def handle(self, *args, **options):
+
+        print_green = lambda text: print(f"\033[92m{text}\033[0m")
+        print_red = lambda text: print(f"\033[91m{text}\033[0m")
 
         with transaction.atomic():
             directory = os.fsencode('./access')
@@ -25,7 +36,7 @@ class Command(BaseCommand):
 
                 with open(f"./access/{filename}") as read_file:
                     lines = read_file.readlines()
-                    # Remove comments.
+                    # Remove comments from *access file.
                     filtered_lines = [line for line in lines if not line.strip().startswith("//")]
                     perm_obj = json.loads("\n".join(filtered_lines))
 
@@ -55,7 +66,12 @@ class Command(BaseCommand):
                             )
 
                         else:
-                            x = role_permission['permissions']
+                            # We need to only check fields when they are
+                            # defined explicitly. With '__all__' we don't have
+                            # to do that.
+                            self.check_fields(
+                                role_permission, fields_strings, filename)
+
                             Permission.objects.update_or_create(
                                 name=perm_obj['name'],
                                 model=perm_obj['model'],
@@ -65,3 +81,4 @@ class Command(BaseCommand):
                                     'write': ", ".join(role_permission['permissions'].get('write', [])),
                                     'delete': ", ".join(role_permission['permissions'].get('delete', []))
                                 })
+        print_green("SUCCESS")

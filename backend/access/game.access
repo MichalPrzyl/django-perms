@@ -14,7 +14,7 @@
         {
           "read": ["name"],
           "write": ["description"],
-          "delete": ["chuja tam"]
+          "delete": []
         }
     }
   ]
