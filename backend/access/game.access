@@ -10,13 +10,12 @@
     // for players
     {
       "role": "player",
-      "permissions": [
+      "permissions": 
         {
           "read": ["name"],
           "write": ["description"],
-          "delete": []
+          "delete": ["chuja tam"]
         }
-      ]
     }
   ]
 }
