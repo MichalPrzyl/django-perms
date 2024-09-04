@@ -1,0 +1,22 @@
+{
+  "name": "game_access",
+  "model": "game.Game",
+  "permissions": [
+    // for admins
+    {
+      "role": "administrative",
+      "permissions": "__all__"
+    },
+    // for players
+    {
+      "role": "player",
+      "permissions": [
+        {
+          "read": ["name"],
+          "write": ["description"],
+          "delete": []
+        }
+      ]
+    }
+  ]
+}
