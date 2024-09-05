@@ -34,10 +34,17 @@ class BaseView(generics.GenericAPIView):
         serializer = self.serializer_class(self.get_queryset(), many=True)
 
         fields_to_remove = []
-        for field in serializer.child.fields:
+        # This is something new I just learned. When using many=True, there is
+        # actually instance of ListSerialier, and it doesn't have `fields` attribute.
+        for field in serializer.child.fields: 
             if field not in fields_to_read:
                 fields_to_remove.append(field)
                 
         for field in fields_to_remove:
             serializer.child.fields.pop(field)
+        # TODO: Check what about pagination. I belive that after instantiating
+        # our serializer, we can just use self.list (ofc with mixin), but I am
+        # not sure tho. This can be something I would explore some day :).
         return Response(serializer.data)
+
+    # TODO: Similar logic should be impelmented for POST, PATCH, DELETE methods.
