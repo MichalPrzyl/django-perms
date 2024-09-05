@@ -17,6 +17,27 @@ The files that I decided to go with are really simple structures, JSON-like with
 </div>
 
 
+Thanks to that we can just create simple views like these:
+
+<div align="center">
+    <img src=".readme/views.png" width=400/>
+</div>
+
+and with correct defined **access files**:
+
+<div align="center">
+    <img src=".readme/tournament_permissions.png" width=400/>
+</div>
+
+we control our permissions to each and every **FIELD**:
+
+Exmaple request:
+
+<div align="center">
+    <img src=".readme/http_request_for_tournament.png" width=400/>
+</div>
+
+
 
 # Error handling
 
