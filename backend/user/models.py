@@ -16,7 +16,10 @@ class Permission(models.Model):
 
 
 class User(AbstractBaseUser):
+    username = models.CharField(max_length=255, unique=True)
     roles = models.ManyToManyField('user.Role', through='user.UserRole', blank=True, related_name='role_users')
+
+    USERNAME_FIELD = 'username'
 
 
 class UserRole(models.Model):

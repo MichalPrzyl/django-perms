@@ -13,6 +13,7 @@ class Command(BaseCommand):
 
         for permission in permissions:
             print(f"name: {permission.name}, model: {permission.model}, role: {permission.role}")
+            print(f"id: {permission.id}")
             print(f"READ: {permission.read}")
             print(f"WRITE: {permission.write}")
             print(f"DELETE: {permission.delete}")

@@ -1,6 +1,6 @@
 {
-  "name": "game_access",
-  "model": "game.Game",
+  "name": "tournament_access",
+  "model": "game.Tournament",
   "permissions": [
     // for admins
     {
@@ -12,7 +12,7 @@
       "role": "player",
       "permissions": 
         {
-          "read": ["name", "description"],
+          "read": ["description"],
           "write": ["description"],
           "delete": []
         }
