@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from main_utils.views import BaseView
 
-# Create your views here.
+from game.models import Game
+from game.serializers import GameSerializer
+
+class GameView(BaseView):
+    queryset = Game.objects.all()
+    serializer_class = GameSerializer
