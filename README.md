@@ -21,12 +21,12 @@ The files that I decided to go with are really simple structures, JSON-like with
 First things first... Sooooo.
 After creating access files, we just do:
 
-(This is the place that txt file is translated to Permissions in db - you might want to look at
-`backend/user/management/commands/load_access.py`)
 
 ```python
 python manage.py load_access
 ```
+(This is the place that **ACCESS** file is translated to `Permissions` instance in db - you might want to look at
+`backend/user/management/commands/load_access.py`)
 
 It updates our db, creating new Permissions or updating current ones.
 
